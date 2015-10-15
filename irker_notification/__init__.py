@@ -91,8 +91,12 @@ class IrkerNotifcationPlugin(Component):
     def wiki_page_added(self, page):
 
         history = page.get_history()[-1]
-        author = history[2] if history[2] else ""
-        comment = history[3] if history[3] else ""
+
+        comment = ''
+        author = ''
+        for v,t,author,comment,ipnr in page.get_history():
+            comment = comment or ''
+            author = author or ''
 
         env = page.env.config.get('rpc-out','source')
 
